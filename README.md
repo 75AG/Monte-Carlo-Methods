@@ -36,6 +36,44 @@ The simulation:
 ---
 
 ## 📂 Files
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Number of simulation trials
+num_trials = 10000
+
+# Generate random variables using uniform distributions
+P = np.random.uniform(100, 1000, num_trials)       # Monetary liquidity (pressure)
+v = np.random.uniform(0.1, 2.0, num_trials)        # Growth rate (velocity)
+Q = np.random.uniform(10, 500, num_trials)         # Economic output
+tau = np.random.uniform(0.05, 0.5, num_trials)     # Tax rate
+r = np.random.uniform(0.01, 0.2, num_trials)       # Interest rate
+
+# Apply adjustments for interest rate and taxes
+v_effective = v * np.exp(-r)
+Q_effective = Q * (1 - tau)
+
+# Compute economic resistance constant μₑ
+mu_e = (P * v_effective) / Q_effective
+
+# Display statistics
+mean_mu_e = np.mean(mu_e)
+median_mu_e = np.median(mu_e)
+std_mu_e = np.std(mu_e)
+
+print(f"Mean μₑ: {mean_mu_e:.2f}")
+print(f"Median μₑ: {median_mu_e:.2f}")
+print(f"Standard Deviation: {std_mu_e:.2f}")
+
+# Plot histogram of μₑ
+plt.figure(figsize=(10, 6))
+plt.hist(mu_e, bins=100, color='skyblue', edgecolor='black', density=True)
+plt.title("Distribution of Economic Resistance Constant μₑ")
+plt.xlabel("μₑ")
+plt.ylabel("Probability Density")
+plt.grid(True)
+plt.show()
+
 
 
 
